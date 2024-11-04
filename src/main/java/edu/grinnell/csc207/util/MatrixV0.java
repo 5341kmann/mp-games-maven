@@ -432,11 +432,6 @@ public class MatrixV0<T> implements Matrix<T> {
         this.contents[r][c + 1] = this.contents[r][c];
       } // for
     } // for
-    // for (int r = 0; r < this.ht; r++) {
-    //   for (int c = this.wid - 1; c >= col; c--) {
-    //     this.contents[r][c + 1] = this.contents[r][c];
-    //   } // for
-    // } // for
     for (int r = 0; r < this.ht; r++) {
       this.contents[r][col] = values[r];
     } // for
