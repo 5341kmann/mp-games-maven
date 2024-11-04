@@ -16,6 +16,27 @@ public class IOUtils {
   // | Local helpers |
   // +---------------+
 
+  /**
+   * Determine if an array contains a particular value.
+   *
+   * @param <T>
+   *   The type of values in the array.
+   * @param vals
+   *   The array to search.
+   * @param val
+   *   The value to look for.
+   *
+   * @return true if the array contains an equal value and false otherwise.
+   */
+  private static <T> boolean arrayContains(T[] vals, T val) {
+    for (T tmp : vals) {
+      if (tmp.equals(val)) {
+        return true;
+      } // if
+    } // for
+    return false;
+  } // arrayContains(T[], T)
+  
   // +------------------+--------------------------------------------
   // | Provided methods |
   // +------------------+
