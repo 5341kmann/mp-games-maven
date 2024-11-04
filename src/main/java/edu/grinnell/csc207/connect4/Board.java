@@ -72,6 +72,7 @@ public class Board {
       sb.append("\n");
     } // for
     sb.append("+-+-+-+-+-+-+-+\n");
+    sb.append(" A B C D E F G\n");
     return sb.toString();
   } // drawBoard()
 } // class Board
