@@ -45,10 +45,39 @@ public class Main {
 
         Good luck!
         """);
-    IOUtils.readCommand(pen, reader, "Would you like to play Connect 4 with one or two players?\n" +
+    // determine whether the user wants one or two players
+    String player = IOUtils.readCommand(pen, reader, "Would you like to play Connect 4 with one or two players?\n" +
     "Enter '1' if one-player, enter '2' if two-player: ", new String[] {"1", "2"});
 
     // the turn count: can check if it's even or odd this way.
     int turn = 0;
-  } // main(Stirng[])
+
+    // create the board
+    Board playingBoard = new Board();
+
+    // is the game over?
+    boolean gameOver = false;
+
+    while (!gameOver) {
+      if (player.equals("1") && turn % 2 == 0) {
+        gameOver = playerTurn('X', playingBoard);
+      } else if (player.equals("2") && turn % 2 == 0) {
+        gameOver = playerTurn('O', playingBoard);
+      } else {
+        // AI's turn
+      } // if-else
+    } // while
+  } // main(String[])
+
+  /**
+   * Plays one player's move, updating the given game board.
+   * @param player
+   *  The character this move will insert into the board.
+   * @param gameBoard
+   *  The board to modify.
+   * @return whether the game is over.
+   */
+  private static boolean playerTurn(Character player, Board playingBoard) {
+    return GameLogic.checkForWinner(player, gameBoard);
+  } // playerTurn(Character, Board)
 } // class Main

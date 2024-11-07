@@ -39,14 +39,73 @@ public class GameLogic {
     return false;
   } //  addPiece()
 
-  public boolean checkForWinner(){
+  public static boolean checkForWinner(int row, int col, Character piece, Board gameBoard) {
     int matches = 0;
 
-    for (int i = 0; i <3 ; i++) {
+    // check horizontal
+    for (int c = col - 3; c <= col + 3; c++) {
+      try {
+        if (gameBoard.getPiece(row, c).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
+    
 
-    }
+    // check vertical
+    for (int r = row - 3; r <= row + 3; r++) {
+      try {
+        if (gameBoard.getPiece(r, col).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
+
+    // check positive-slope diagonal
+    for (int r = row - 3, c = col - 3; r <= row + 3 && c <= col + 3; r++, c++) {
+      try {
+        if (gameBoard.getPiece(r, c).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
+
+    // check negative-slope diagonal
+    for (int r = row - 3, c = col + 3; r <= row + 3 && c >= col - 3; r++, c--) {
+      try {
+        if (gameBoard.getPiece(r, c).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
     return false;
   } // checkForWinner()
-
-
 } // GameLogic class
