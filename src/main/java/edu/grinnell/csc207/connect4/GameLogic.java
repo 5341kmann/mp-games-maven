@@ -45,25 +45,72 @@ public class GameLogic {
 
 
 
-  public boolean checkForWinner(int row, int col, Character piece) {
-    int count = 0;
-    int dx = -1;
-    int dy = 0;
-    int n = 1;
-//    Work In Progress
-//    while (count < 3) {
-//      try {
-//        if (gameBoard.getPiece(row + n * dx, col + n * dy).equals(piece)) {
-//          count++;
-//          n++;
-//        } else {
-//          dx = 1;
-//        }
-//      } catch (IndexOutOfBoundsException e) {
-//
-//      }
-//    } // while
+  public static boolean checkForWinner(int row, int col, Character piece, Board gameBoard) {
+    int matches = 0;
+    
+    // check horizontal
+    for (int c = col - 3; c <= col + 3; c++) {
+      try {
+        if (gameBoard.getPiece(row, c).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
 
+    // check vertical
+    for (int r = row - 3; r <= row + 3; r++) {
+      try {
+        if (gameBoard.getPiece(r, col).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
+
+    // check positive-slope diagonal
+    for (int r = row - 3, c = col - 3; r <= row + 3 && c <= col + 3; r++, c++) {
+      try {
+        if (gameBoard.getPiece(r, c).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
+
+    // check negative-slope diagonal
+    for (int r = row - 3, c = col + 3; r <= row + 3 && c >= col - 3; r++, c--) {
+      try {
+        if (gameBoard.getPiece(r, c).equals(piece)) {
+          matches++;
+        } else {
+          matches = 0;
+        } // if-else
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      } // try-catch
+      if (matches == 4) {
+        return true;
+      } // if
+    } // for
     return false;
   } // checkForWinner()
 } // GameLogic class
