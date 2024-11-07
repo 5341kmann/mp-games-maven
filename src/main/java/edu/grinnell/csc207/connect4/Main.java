@@ -78,6 +78,10 @@ public class Main {
    * @return whether the game is over.
    */
   private static boolean playerTurn(Character player, Board playingBoard) {
-    return GameLogic.checkForWinner(player, gameBoard);
+    // have user enter a letter
+
+    // determine lowest row
+        
+    return GameLogic.checkForWinner(0, 0, player, playingBoard); // STUB
   } // playerTurn(Character, Board)
 } // class Main

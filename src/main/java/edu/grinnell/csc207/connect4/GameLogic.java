@@ -20,6 +20,7 @@ public class GameLogic {
   int turnCount;
 //  Constructors
 
+// could we get rid of the constructor?
   public GameLogic(Board gameBoard) {
     this.gameBoard = gameBoard;
     this.turnCount = 0;
@@ -32,13 +33,16 @@ public class GameLogic {
    * @param col column on Board where the piece will be placed.
    * @return whether the piece could be successfully added.
    */
+  // could we make this static?
   public boolean addPiece(int col, char piece) {
     try {
       int height = this.gameBoard.getHeight(col);
       gameBoard.setPiece(height, col, piece);
       gameBoard.incrementHeight(col);
       return true;
-    } catch (Exception e) {
+    } catch (ColumnFullException e) {
+      // possibly returns an integer representing the row, so that Main can use the row
+      // then throws a ColumnFullException if the column is full
       return false;
     } // try-catch
   } // addPiece()
