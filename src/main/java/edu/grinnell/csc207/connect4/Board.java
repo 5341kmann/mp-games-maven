@@ -1,5 +1,6 @@
 package edu.grinnell.csc207.connect4;
 
+import edu.grinnell.csc207.connect4.util.ColumnFullException;
 import edu.grinnell.csc207.util.MatrixV0;
 
 /**
@@ -15,6 +16,11 @@ public class Board {
   private MatrixV0<Character> gameBoard;
 
   /**
+   * Heights of the current board columns.
+   */
+  private int[] heights;
+
+  /**
    * The constant width of the board.
    */
   private static final int BOARD_WIDTH = 7;
@@ -24,12 +30,14 @@ public class Board {
    */
   private static final int BOARD_HEIGHT = 6;
 
+
   /**
    * The board constructor. Constructs a board of characters with defualt
    * height and width, filling ' ' as the default character.
    */
   public Board() {
     this.gameBoard = new MatrixV0<Character>(BOARD_WIDTH, BOARD_HEIGHT, ' ');
+    this.heights = new int[BOARD_WIDTH];
   } // Board()
 
   /**
@@ -54,8 +62,29 @@ public class Board {
    *  The character to fill the space with.
    */
   public void setPiece(int row, int col, Character piece) {
-    gameBoard.set(row, col, piece);
+    gameBoard.set(BOARD_HEIGHT - row - 1, col, piece);
   } // setPiece(int, int, Character)
+
+  /**
+   * Returns the height of a given column.
+   * @param col index of the column of interest.
+   * @return The height of the given column.
+   */
+  public int getHeight(int col) {
+    return heights[col];
+  } // getHeight()
+
+  /**
+   * Increments the height of the given column.
+   * @param col the column you would like to increment.
+   * @pre the current height of col is < 6
+   */
+  public void incrementHeight(int col) throws ColumnFullException {
+    if (col >= BOARD_HEIGHT){
+      throw new ColumnFullException();
+    } // if
+    heights[col]++;
+  } // incrementHeight()
 
   /**
    * Builds a string representing the board.
