@@ -101,7 +101,7 @@ public class Board {
       sb.append("\n");
     } // for
     sb.append("+-+-+-+-+-+-+-+\n");
-    sb.append(" A B C D E F G\n");
+    sb.append(" 1 2 3 4 5 6 7\n");
     return sb.toString();
   } // drawBoard()
 } // class Board

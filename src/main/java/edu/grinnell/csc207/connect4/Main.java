@@ -49,6 +49,8 @@ public class Main {
     String player = IOUtils.readCommand(pen, reader, "Would you like to play Connect 4 with one or two players?\n" +
     "Enter '1' if one-player, enter '2' if two-player: ", new String[] {"1", "2"});
 
+    pen.println("We have collected your response. Let the game begin!");
+
     // the turn count: can check if it's even or odd this way.
     int turn = 0;
 
@@ -60,28 +62,43 @@ public class Main {
 
     while (!gameOver) {
       if (player.equals("1") && turn % 2 == 0) {
-        gameOver = playerTurn('X', playingBoard);
-      } else if (player.equals("2") && turn % 2 == 0) {
-        gameOver = playerTurn('O', playingBoard);
+        gameOver = playerTurn(pen, reader, 'X', playingBoard);
+      } else if (player.equals("1") && turn % 2 == 1) {
+        gameOver = playerTurn(pen, reader, 'O', playingBoard);
       } else {
         // AI's turn
       } // if-else
+      // if board full, game over.
     } // while
   } // main(String[])
 
   /**
    * Plays one player's move, updating the given game board.
+   * @param pen
+   *  The 
    * @param player
    *  The character this move will insert into the board.
    * @param gameBoard
    *  The board to modify.
    * @return whether the game is over.
-   */
-  private static boolean playerTurn(Character player, Board playingBoard) {
+      * @throws IOException 
+      */
+     private static boolean playerTurn(PrintWriter pen, BufferedReader reader, Character player, Board playingBoard) throws IOException {
+    pen.println("Player " + player.toString() + " , you're up.");
+    pen.println(playingBoard);
     // have user enter a letter
-
+    int col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
+                                        "Pick a column between 1 and 7", 
+                                        new String[] {"1", "2", "3", "4", "5", "6", "7"}));
     // determine lowest row
-        
-    return GameLogic.checkForWinner(0, 0, player, playingBoard); // STUB
-  } // playerTurn(Character, Board)
+    int row = GameLogic.addPiece(col, player);
+    while (row < 0) {
+      pen.println("This row if full. Please pick a different row.");
+      col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
+                                        "Pick a column between 1 and 7", 
+                                        new String[] {"1", "2", "3", "4", "5", "6", "7"}));
+      row = GameLogic.addPiece(col, player);
+    } // while
+    return GameLogic.checkForWinner(row, col, player, playingBoard);
+  } // playerTurn(PrintWriter, Character, Board)
 } // class Main
