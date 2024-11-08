@@ -63,37 +63,51 @@ public class GameLogic {
     for (int c = col - 3; c <= col + 3; c++) {
       if (isPieceAt(row, c, piece, gameBoard)) {
         matches++;
-      } // if
+      } else {
+        matches = 0;
+      } // if-else
       if (matches == WIN_COUNT) {
         return true;
       } // if
     } // for
+
+    matches = 0;
 
     // check vertical
     for (int r = row - 3; r <= row + 3; r++) {
       if (isPieceAt(r, col, piece, gameBoard)) {
         matches++;
-      } // if
+      } else {
+        matches = 0;
+      } // if-else
       if (matches == WIN_COUNT) {
         return true;
       } // if
     } // for
+
+    matches = 0;
 
     // check positive-slope diagonal
     for (int r = row - 3, c = col - 3; r <= row + 3 && c <= col + 3; r++, c++) {
       if (isPieceAt(r, c, piece, gameBoard)) {
         matches++;
-      } // if
+      } else {
+        matches = 0;
+      } // if-else
       if (matches == WIN_COUNT) {
         return true;
       } // if
     } // for
 
+    matches = 0;
+
     // check negative-slope diagonal
     for (int r = row - 3, c = col + 3; r <= row + 3 && c >= col - 3; r++, c--) {
       if (isPieceAt(r, c, piece, gameBoard)) {
         matches++;
-      } // if
+      } else {
+        matches = 0;
+      } // if-else
       if (matches == WIN_COUNT) {
         return true;
       } // if
@@ -105,10 +119,14 @@ public class GameLogic {
    * Helper for checkForWinner() method returning whether the provided piece is located at a
    * position on the board.
    *
-   * @param row       zero indexed coordinate of board row
-   * @param col       zero indexed coordinate of board col
-   * @param piece     Character of piece of interest
-   * @param gameBoard Board of gameplay
+   * @param row
+   *  zero indexed coordinate of board row
+   * @param col
+   *  zero indexed coordinate of board col
+   * @param piece
+   *  Character of piece of interest
+   * @param gameBoard
+   *  Board of gameplay
    * @return whether the piece was found at the location
    */
   private static boolean isPieceAt(int row, int col, Character piece, Board gameBoard) {
@@ -117,5 +135,5 @@ public class GameLogic {
     } catch (IndexOutOfBoundsException e) {
       return false;
     } // try-catch
-  } // checkForWinnerHelper(int, int, Character, Board)
+  } // isPieceAt(int, int, Character, Board)
 } // GameLogic class

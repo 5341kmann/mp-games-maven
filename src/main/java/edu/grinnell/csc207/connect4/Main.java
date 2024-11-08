@@ -35,14 +35,16 @@ public class Main {
         while O's represent Player 2.
 
         During gameplay, you can choose the column to put your next piece into. This is done
-        by typing letters A through G in the command line, representing the columns.
+        by typing numbers 1 through 7 in the command line, representing the columns.
 
         In one-player Connect 4, you will be Player 1 (represented by X's), and the computer
         will play as Player 2 (represented by O's).
 
-        In two-player Connect 4, Player 1 is the first person who goes.
+        In two-player Connect 4, Player 1 (the first person who goes) is represented by X's, while
+        Player 2 (the second person who goes) is represented by O's.
 
-        The game will end as soon as one player has connected four of their pieces.
+        The game will end as soon as one player has connected four of their pieces or the board
+        fills up, whichever happens first.
 
         Good luck!
         """);
@@ -82,11 +84,17 @@ public class Main {
         gameOver = GameLogic.checkForWinner(row, col, 'O', playingBoard);
         winner = 'O';
       } // if-else
-      // if board full, game over
+      if (playingBoard.isFull()) {
+        gameOver = true;
+      } // if
       turn++;
     } // while
     pen.println(playingBoard);
-    pen.println("Player " + winner + " won!!!");
+    if (winner.equals(' ')) {
+      pen.println("You are out of space!");
+    } else {
+      pen.println("Player " + winner + " won!!!");
+    }
   } // main(String[])
 
   /**

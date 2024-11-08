@@ -49,7 +49,7 @@ public class Board {
    * @return the piece in the given space.
    */
   public Character getPiece(int row, int col) {
-    return gameBoard.get(row, col);
+    return gameBoard.get(BOARD_HEIGHT - row - 1, col);
   } // getPiece(int, int)
 
   /**
@@ -84,7 +84,22 @@ public class Board {
       throw new  ColumnFullException();
     } // if
     heights[col]++;
-  } // incrementHeight()
+  } // incrementHeight(int)
+
+  /**
+   * Determines whether the board is full.
+   * @return true if there are no spaces left, false otherwise.
+   */
+  public boolean isFull() {
+    for (int r = 0; r < BOARD_HEIGHT; r++) {
+      for (int c = 0; c < BOARD_WIDTH; c++) {
+        if (gameBoard.get(r, c).equals(' ')) {
+          return false;
+        } // if
+      } // for
+    } // for
+    return true;
+  } // isFull()
 
   /**
    * Builds a string representing the board.
@@ -103,5 +118,5 @@ public class Board {
     sb.append("+-+-+-+-+-+-+-+\n");
     sb.append(" 1 2 3 4 5 6 7\n");
     return sb.toString();
-  } // drawBoard()
+  } // toString()
 } // class Board
