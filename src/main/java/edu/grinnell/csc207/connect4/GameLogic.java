@@ -22,7 +22,7 @@ public class GameLogic {
   private static final int WIN_COUNT = 4;
 //  Constructors
 
-// could we get rid of the constructor?
+  // could we get rid of the constructor?
   public GameLogic(Board gameBoard) {
     this.gameBoard = gameBoard;
     this.turnCount = 0;
@@ -35,61 +35,68 @@ public class GameLogic {
    * @param col column on Board where the piece will be placed.
    * @return whether the piece could be successfully added.
    */
-  // could we make this static?
-  public boolean addPiece(int col, char piece) {
+  public static int addPiece(int col, Character piece, Board board) {
     try {
-      int height = this.gameBoard.getHeight(col);
-      gameBoard.setPiece(height, col, piece);
-      gameBoard.incrementHeight(col);
-      return true;
+      int height = board.getHeight(col);
+      board.setPiece(height, col, piece);
+      board.incrementHeight(col);
+      return height - 1;
     } catch (ColumnFullException e) {
       // possibly returns an integer representing the row, so that Main can use the row
       // then throws a ColumnFullException if the column is full
-      return false;
+      return -1;
     } // try-catch
   } // addPiece()
 
 
-
+  /**
+   * Checks if the current piece is a winning play.
+   *
+   * @param row       zero indexed coordinate of piece row
+   * @param col       zero indexed coordinate of piece col
+   * @param piece     Character of piece of interest
+   * @param gameBoard Board of gameplay
+   * @return Whether the piece is part of a winning connection.
+   */
   public static boolean checkForWinner(int row, int col, Character piece, Board gameBoard) {
     int matches = 0;
 
     // check horizontal
     for (int c = col - 3; c <= col + 3; c++) {
-      if(isPieceAt(row, c, piece, gameBoard)) {
+      if (isPieceAt(row, c, piece, gameBoard)) {
         matches++;
       } // if
-      if (matches == 4) {
+      if (matches == WIN_COUNT) {
         return true;
       } // if
     } // for
 
     // check vertical
     for (int r = row - 3; r <= row + 3; r++) {
-      if(isPieceAt(r, col, piece, gameBoard)) {
+      if (isPieceAt(r, col, piece, gameBoard)) {
         matches++;
       } // if
-      if (matches == 4) {
+      if (matches == WIN_COUNT) {
         return true;
       } // if
     } // for
 
     // check positive-slope diagonal
     for (int r = row - 3, c = col - 3; r <= row + 3 && c <= col + 3; r++, c++) {
-      if(isPieceAt(r, c, piece, gameBoard)) {
+      if (isPieceAt(r, c, piece, gameBoard)) {
         matches++;
       } // if
-      if (matches == 4) {
+      if (matches == WIN_COUNT) {
         return true;
       } // if
     } // for
 
     // check negative-slope diagonal
     for (int r = row - 3, c = col + 3; r <= row + 3 && c >= col - 3; r++, c--) {
-      if(isPieceAt(r, c, piece, gameBoard)) {
+      if (isPieceAt(r, c, piece, gameBoard)) {
         matches++;
       } // if
-      if (matches == 4) {
+      if (matches == WIN_COUNT) {
         return true;
       } // if
     } // for
@@ -97,10 +104,12 @@ public class GameLogic {
   } // checkForWinner()
 
   /**
-   * Helper for checkForWinner() method returning whether the provided piece is located at a position on the board.
-   * @param row zero indexed coordinate of board row
-   * @param col zero indexed coordinate of board col
-   * @param piece Character of piece of interest
+   * Helper for checkForWinner() method returning whether the provided piece is located at a
+   * position on the board.
+   *
+   * @param row       zero indexed coordinate of board row
+   * @param col       zero indexed coordinate of board col
+   * @param piece     Character of piece of interest
    * @param gameBoard Board of gameplay
    * @return whether the piece was found at the location
    */
