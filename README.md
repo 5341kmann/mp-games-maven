@@ -5,7 +5,7 @@ A mini-project for Grinnell's CSC-207.
 Authors:
 
 * Sarah Deschamps
-* Grant Sackmanns
+* Grant Sackmann
 * Samuel A. Rebelsky (Starter code)
 
 Instructions:

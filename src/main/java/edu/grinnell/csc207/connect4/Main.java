@@ -18,7 +18,7 @@ public class Main {
    * The method that directly runs the game.
    * @param args
    *  Arguments sent to main.
-   * @throws IOException 
+   * @throws IOException
    */
   public static void main(String[] args) throws IOException {
     // CONFIGURATION: ask the user if they want 1 Player or 2 Players.
@@ -31,7 +31,7 @@ public class Main {
         The object of this game is to connect four of your pieces in a row. This can be done
         vertically, horizontally, or diagonally.
 
-        The game board is filled with X's, O's, and blanks. X's represent Player 1, 
+        The game board is filled with X's, O's, and blanks. X's represent Player 1,
         while O's represent Player 2.
 
         During gameplay, you can choose the column to put your next piece into. This is done
@@ -49,8 +49,11 @@ public class Main {
         Good luck!
         """);
     // determine whether the user wants one or two players
-    String player = IOUtils.readCommand(pen, reader, "Would you like to play Connect 4 with one or two players?\n" +
-    "Enter '1' if one-player, enter '2' if two-player: ", new String[] {"1", "2"});
+    String player = IOUtils.readCommand(pen, reader,
+                                        "Would you like to play Connect 4 "
+                                        + "with one or two players?\n"
+                                        + "Enter '1' if one-player, enter '2' if two-player: ",
+                                        new String[] {"1", "2"});
 
     pen.println("We have collected your response. Let the game begin!");
 
@@ -86,6 +89,7 @@ public class Main {
       } // if-else
       if (playingBoard.isFull()) {
         gameOver = true;
+        winner = ' ';
       } // if
       turn++;
     } // while
@@ -94,36 +98,40 @@ public class Main {
       pen.println("You are out of space!");
     } else {
       pen.println("Player " + winner + " won!!!");
-    }
+    } // if-else
   } // main(String[])
 
   /**
    * Plays one player's move, updating the given game board.
    * @param pen
-   *  The 
+   *  The pen to write the game board and instructions with.
+   * @param reader
+   *  The reader to get input from.
    * @param player
    *  The character this move will insert into the board.
-   * @param gameBoard
+   * @param playingBoard
    *  The board to modify.
    * @return whether the game is over.
-      * @throws IOException 
-      */
-  private static boolean playerTurn(PrintWriter pen, BufferedReader reader, Character player, Board playingBoard) throws IOException {
+   * @throws IOException
+   */
+  private static boolean playerTurn(PrintWriter pen, BufferedReader reader, Character player,
+                                    Board playingBoard) throws IOException {
     pen.println("\n");
     pen.println("Player " + player.toString() + ", you're up.");
     pen.println(playingBoard);
     // have user enter a letter
-    int col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
-                                        "Pick a column between 1 and 7: ", 
+    int col = Integer.parseInt(IOUtils.readCommand(pen, reader,
+                                        "Pick a column between 1 and 7: ",
                                         new String[] {"1", "2", "3", "4", "5", "6", "7"}));
     col--;
     // determine lowest row
     int row = GameLogic.addPiece(col, player, playingBoard);
     while (row < 0) {
       pen.println("This row is full. Please pick a different row.");
-      col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
-                                        "Pick a column between 1 and 7: ", 
+      col = Integer.parseInt(IOUtils.readCommand(pen, reader,
+                                        "Pick a column between 1 and 7: ",
                                         new String[] {"1", "2", "3", "4", "5", "6", "7"}));
+      col--;
       row = GameLogic.addPiece(col, player, playingBoard);
     } // while
     return GameLogic.checkForWinner(row, col, player, playingBoard);

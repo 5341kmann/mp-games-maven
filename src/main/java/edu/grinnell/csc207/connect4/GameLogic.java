@@ -1,7 +1,5 @@
 package edu.grinnell.csc207.connect4;
 
-import edu.grinnell.csc207.connect4.util.ColumnFullException;
-
 /**
  * Processing user inputs for the connect 4 game.
  *
@@ -9,31 +7,21 @@ import edu.grinnell.csc207.connect4.util.ColumnFullException;
  * @author Grant Sackmann
  */
 public class GameLogic {
-//  Fields
   /**
-   * Board containg the state of the game
+   * The number of characters in a row needed to win.
    */
-  Board gameBoard;
-  /**
-   * The current turn number for entire game
-   */
-  int turnCount;
-
   private static final int WIN_COUNT = 4;
-//  Constructors
-
-  // could we get rid of the constructor?
-  public GameLogic(Board gameBoard) {
-    this.gameBoard = gameBoard;
-    this.turnCount = 0;
-  }
-//  Methods
 
   /**
    * Add a piece to the game board provided a location for the piece.
    *
-   * @param col column on Board where the piece will be placed.
-   * @return whether the piece could be successfully added.
+   * @param col
+   *  Column on Board where the piece will be placed.
+   * @param piece
+   *  The character to add to the board.
+   * @param board
+   *  The board to add the character to.
+   * @return the row at which the piece was added.
    */
   public static int addPiece(int col, Character piece, Board board) {
     try {
@@ -41,19 +29,23 @@ public class GameLogic {
       board.setPiece(height, col, piece);
       board.incrementHeight(col);
       return height;
-    } catch (ColumnFullException e) {
+    } catch (Exception e) {
       return -1;
     } // try-catch
-  } // addPiece()
+  } // addPiece(int, Character, Board)
 
 
   /**
    * Checks if the current piece is a winning play.
    *
-   * @param row       zero indexed coordinate of piece row
-   * @param col       zero indexed coordinate of piece col
-   * @param piece     Character of piece of interest
-   * @param gameBoard Board of gameplay
+   * @param row
+   *  Zero-indexed coordinate of piece row.
+   * @param col
+   *  Zero-indexed coordinate of piece col.
+   * @param piece
+   *  Character of piece of interest.
+   * @param gameBoard
+   *  Board of gameplay.
    * @return Whether the piece is part of a winning connection.
    */
   public static boolean checkForWinner(int row, int col, Character piece, Board gameBoard) {
@@ -113,21 +105,21 @@ public class GameLogic {
       } // if
     } // for
     return false;
-  } // checkForWinner()
+  } // checkForWinner(int, int, Character, Board)
 
   /**
    * Helper for checkForWinner() method returning whether the provided piece is located at a
    * position on the board.
    *
    * @param row
-   *  zero indexed coordinate of board row
+   *  Zero-indexed coordinate of board row.
    * @param col
-   *  zero indexed coordinate of board col
+   *  Zero-indexed coordinate of board col.
    * @param piece
-   *  Character of piece of interest
+   *  Character of piece of interest.
    * @param gameBoard
-   *  Board of gameplay
-   * @return whether the piece was found at the location
+   *  Board of gameplay.
+   * @return whether the piece was found at the location.
    */
   private static boolean isPieceAt(int row, int col, Character piece, Board gameBoard) {
     try {
@@ -136,4 +128,4 @@ public class GameLogic {
       return false;
     } // try-catch
   } // isPieceAt(int, int, Character, Board)
-} // GameLogic class
+} // class GameLogic

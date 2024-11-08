@@ -42,6 +42,7 @@ public class Board {
 
   /**
    * Returns the piece at the specified row and column.
+   *
    * @param row
    *  The row the piece is in.
    * @param col
@@ -54,6 +55,7 @@ public class Board {
 
   /**
    * Fills the space at the given row and column with the given value.
+   *
    * @param row
    *  The given row.
    * @param col
@@ -67,20 +69,23 @@ public class Board {
 
   /**
    * Returns the height of a given column.
-   * @param col index of the column of interest.
-   * @return The height of the given column.
+   *
+   * @param col
+   *  The index of the column of interest.
+   * @return the height of the given column.
    */
   public int getHeight(int col) {
     return heights[col];
-  } // getHeight()
+  } // getHeight(int)
 
   /**
    * Increments the height of the given column.
-   * @param col the column you would like to increment.
-   * @pre the current height of col is < 6
+   * @param col
+   *  The column you would like to increment.
+   * @throws ColumnFullException
    */
   public void incrementHeight(int col) throws ColumnFullException {
-    if (heights[col] >= BOARD_HEIGHT){
+    if (heights[col] >= BOARD_HEIGHT) {
       throw new  ColumnFullException();
     } // if
     heights[col]++;
@@ -88,6 +93,7 @@ public class Board {
 
   /**
    * Determines whether the board is full.
+   *
    * @return true if there are no spaces left, false otherwise.
    */
   public boolean isFull() {
@@ -103,6 +109,7 @@ public class Board {
 
   /**
    * Builds a string representing the board.
+   *
    * @return the string representation of the board.
    */
   public String toString() {
