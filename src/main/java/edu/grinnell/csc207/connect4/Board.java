@@ -80,7 +80,7 @@ public class Board {
    * @pre the current height of col is < 6
    */
   public void incrementHeight(int col) throws ColumnFullException {
-    if (col >= BOARD_HEIGHT){
+    if (heights[col] >= BOARD_HEIGHT){
       throw new  ColumnFullException();
     } // if
     heights[col]++;

@@ -62,12 +62,14 @@ public class Main {
     boolean gameOver = false;
 
     Random rand = new Random();
-
+    Character winner = ' ';
     while (!gameOver) {
       if (turn % 2 == 0) {
         gameOver = playerTurn(pen, reader, 'X', playingBoard);
+        winner = 'X';
       } else if (player.equals("2") && turn % 2 == 1) {
         gameOver = playerTurn(pen, reader, 'O', playingBoard);
+        winner = 'O';
       } else {
         pen.println("Computer's Turn!");
         int col = rand.nextInt(1, 7);
@@ -78,10 +80,13 @@ public class Main {
           row = GameLogic.addPiece(col, 'O', playingBoard);
         } // while
         gameOver = GameLogic.checkForWinner(row, col, 'O', playingBoard);
+        winner = 'O';
       } // if-else
       // if board full, game over
       turn++;
     } // while
+    pen.println(playingBoard);
+    pen.println("Player " + winner + " won!!!");
   } // main(String[])
 
   /**
@@ -96,7 +101,8 @@ public class Main {
       * @throws IOException 
       */
   private static boolean playerTurn(PrintWriter pen, BufferedReader reader, Character player, Board playingBoard) throws IOException {
-    pen.println("Player " + player.toString() + " , you're up.");
+    pen.println("\n");
+    pen.println("Player " + player.toString() + ", you're up.");
     pen.println(playingBoard);
     // have user enter a letter
     int col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
