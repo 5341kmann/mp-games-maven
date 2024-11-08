@@ -40,10 +40,8 @@ public class GameLogic {
       int height = board.getHeight(col);
       board.setPiece(height, col, piece);
       board.incrementHeight(col);
-      return height - 1;
+      return height;
     } catch (ColumnFullException e) {
-      // possibly returns an integer representing the row, so that Main can use the row
-      // then throws a ColumnFullException if the column is full
       return -1;
     } // try-catch
   } // addPiece()

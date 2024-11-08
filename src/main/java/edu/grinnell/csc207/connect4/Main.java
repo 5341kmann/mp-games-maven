@@ -74,11 +74,13 @@ public class Main {
         int row = GameLogic.addPiece(col, 'O', playingBoard);
         while (row < 0) {
           col = rand.nextInt(1, 7);
+          col--;
           row = GameLogic.addPiece(col, 'O', playingBoard);
         } // while
         gameOver = GameLogic.checkForWinner(row, col, 'O', playingBoard);
       } // if-else
-      // if board full, game over.
+      // if board full, game over
+      turn++;
     } // while
   } // main(String[])
 
@@ -93,19 +95,20 @@ public class Main {
    * @return whether the game is over.
       * @throws IOException 
       */
-     private static boolean playerTurn(PrintWriter pen, BufferedReader reader, Character player, Board playingBoard) throws IOException {
+  private static boolean playerTurn(PrintWriter pen, BufferedReader reader, Character player, Board playingBoard) throws IOException {
     pen.println("Player " + player.toString() + " , you're up.");
     pen.println(playingBoard);
     // have user enter a letter
     int col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
-                                        "Pick a column between 1 and 7", 
+                                        "Pick a column between 1 and 7: ", 
                                         new String[] {"1", "2", "3", "4", "5", "6", "7"}));
+    col--;
     // determine lowest row
     int row = GameLogic.addPiece(col, player, playingBoard);
     while (row < 0) {
-      pen.println("This row if full. Please pick a different row.");
+      pen.println("This row is full. Please pick a different row.");
       col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
-                                        "Pick a column between 1 and 7", 
+                                        "Pick a column between 1 and 7: ", 
                                         new String[] {"1", "2", "3", "4", "5", "6", "7"}));
       row = GameLogic.addPiece(col, player, playingBoard);
     } // while
