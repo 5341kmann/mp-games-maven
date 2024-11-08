@@ -18,6 +18,8 @@ public class GameLogic {
    * The current turn number for entire game
    */
   int turnCount;
+
+  private static final int WIN_COUNT = 4;
 //  Constructors
 
 // could we get rid of the constructor?
@@ -51,18 +53,12 @@ public class GameLogic {
 
   public static boolean checkForWinner(int row, int col, Character piece, Board gameBoard) {
     int matches = 0;
-    
+
     // check horizontal
     for (int c = col - 3; c <= col + 3; c++) {
-      try {
-        if (gameBoard.getPiece(row, c).equals(piece)) {
-          matches++;
-        } else {
-          matches = 0;
-        } // if-else
-      } catch (IndexOutOfBoundsException e) {
-        // do nothing
-      } // try-catch
+      if(isPieceAt(row, c, piece, gameBoard)) {
+        matches++;
+      } // if
       if (matches == 4) {
         return true;
       } // if
@@ -70,15 +66,9 @@ public class GameLogic {
 
     // check vertical
     for (int r = row - 3; r <= row + 3; r++) {
-      try {
-        if (gameBoard.getPiece(r, col).equals(piece)) {
-          matches++;
-        } else {
-          matches = 0;
-        } // if-else
-      } catch (IndexOutOfBoundsException e) {
-        // do nothing
-      } // try-catch
+      if(isPieceAt(r, col, piece, gameBoard)) {
+        matches++;
+      } // if
       if (matches == 4) {
         return true;
       } // if
@@ -86,15 +76,9 @@ public class GameLogic {
 
     // check positive-slope diagonal
     for (int r = row - 3, c = col - 3; r <= row + 3 && c <= col + 3; r++, c++) {
-      try {
-        if (gameBoard.getPiece(r, c).equals(piece)) {
-          matches++;
-        } else {
-          matches = 0;
-        } // if-else
-      } catch (IndexOutOfBoundsException e) {
-        // do nothing
-      } // try-catch
+      if(isPieceAt(r, c, piece, gameBoard)) {
+        matches++;
+      } // if
       if (matches == 4) {
         return true;
       } // if
@@ -102,19 +86,29 @@ public class GameLogic {
 
     // check negative-slope diagonal
     for (int r = row - 3, c = col + 3; r <= row + 3 && c >= col - 3; r++, c--) {
-      try {
-        if (gameBoard.getPiece(r, c).equals(piece)) {
-          matches++;
-        } else {
-          matches = 0;
-        } // if-else
-      } catch (IndexOutOfBoundsException e) {
-        // do nothing
-      } // try-catch
+      if(isPieceAt(r, c, piece, gameBoard)) {
+        matches++;
+      } // if
       if (matches == 4) {
         return true;
       } // if
     } // for
     return false;
   } // checkForWinner()
+
+  /**
+   * Helper for checkForWinner() method returning whether the provided piece is located at a position on the board.
+   * @param row zero indexed coordinate of board row
+   * @param col zero indexed coordinate of board col
+   * @param piece Character of piece of interest
+   * @param gameBoard Board of gameplay
+   * @return whether the piece was found at the location
+   */
+  private static boolean isPieceAt(int row, int col, Character piece, Board gameBoard) {
+    try {
+      return gameBoard.getPiece(row, col).equals(piece);
+    } catch (IndexOutOfBoundsException e) {
+      return false;
+    } // try-catch
+  } // checkForWinnerHelper(int, int, Character, Board)
 } // GameLogic class
