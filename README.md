@@ -24,7 +24,9 @@ Instructions:
   fills up, whichever happens first.
 
 Acknowledgements:
+
 https://stackoverflow.com/questions/14752536/java-for-loop-multiple-variables to figure out how to declare a for loop with two variables
+
 https://docs.oracle.com/javase/8/docs/api/java/util/Random.html for random computer moves.
 
 Source:
