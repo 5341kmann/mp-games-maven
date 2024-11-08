@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import edu.grinnell.csc207.util.IOUtils;
+import java.util.Random;
 /**
  * The main class interacting with the user.
  * Gives the user instructions and runs Connect 4 game.
@@ -60,13 +61,22 @@ public class Main {
     // is the game over?
     boolean gameOver = false;
 
+    Random rand = new Random();
+
     while (!gameOver) {
-      if (player.equals("1") && turn % 2 == 0) {
+      if (turn % 2 == 0) {
         gameOver = playerTurn(pen, reader, 'X', playingBoard);
-      } else if (player.equals("1") && turn % 2 == 1) {
+      } else if (player.equals("2") && turn % 2 == 1) {
         gameOver = playerTurn(pen, reader, 'O', playingBoard);
       } else {
-        // AI's turn
+        pen.println("Computer's Turn!");
+        int col = rand.nextInt(1, 7);
+        int row = GameLogic.addPiece(col, 'O', playingBoard);
+        while (row < 0) {
+          col = rand.nextInt(1, 7);
+          row = GameLogic.addPiece(col, 'O', playingBoard);
+        } // while
+        gameOver = GameLogic.checkForWinner(row, col, 'O', playingBoard);
       } // if-else
       // if board full, game over.
     } // while
@@ -91,13 +101,13 @@ public class Main {
                                         "Pick a column between 1 and 7", 
                                         new String[] {"1", "2", "3", "4", "5", "6", "7"}));
     // determine lowest row
-    int row = GameLogic.addPiece(col, player);
+    int row = GameLogic.addPiece(col, player, playingBoard);
     while (row < 0) {
       pen.println("This row if full. Please pick a different row.");
       col = Integer.parseInt(IOUtils.readCommand(pen, reader, 
                                         "Pick a column between 1 and 7", 
                                         new String[] {"1", "2", "3", "4", "5", "6", "7"}));
-      row = GameLogic.addPiece(col, player);
+      row = GameLogic.addPiece(col, player, playingBoard);
     } // while
     return GameLogic.checkForWinner(row, col, player, playingBoard);
   } // playerTurn(PrintWriter, Character, Board)
